@@ -3,10 +3,11 @@ const login = require("facebook-chat-api");
 const TelegramBot = require('node-telegram-bot-api');
 
 const token = process.env.TELEGRAM_TOKEN;
+const messengerID = process.env.MESSENGER_ID;
+const telegramID = process.env.TELEGRAM_ID;
+const messengerName = process.env.FB_NAME;
 const bot = new TelegramBot(token, {polling: true});
 
-
-// Create simple echo bot
 login({email: process.env.FB_EMAIL, password: process.env.FB_PASSWORD}, (err, api) => {
 	if(err) return console.error(err);
 	api.setOptions({selfListen: true});
@@ -15,11 +16,11 @@ login({email: process.env.FB_EMAIL, password: process.env.FB_PASSWORD}, (err, ap
 		if (err) return console.error(err);
 
 		console.log(message.threadID + ": " + message.body);
-		if (message.threadID == 1558398277597596) {
+		if (message.threadID == MESSENGER_ID) {
 			api.getUserInfo(message.senderID, (err, ret) => {
 				if(err) return console.error(err);
 				for (var prop in ret) {
-					bot.sendMessage(765650906, ret[prop].name + ": " + message.body);
+					bot.sendMessage(TELEGRAM_ID, ret[prop].name + ": " + message.body);
 				}
 			});
 		}
@@ -27,7 +28,6 @@ login({email: process.env.FB_EMAIL, password: process.env.FB_PASSWORD}, (err, ap
 	bot.on('message', (msg) => {
 		const chatId = msg.chat.id;
 		var message = msg.text;
-		api.sendMessage("Chirag Nanda: " + message, 1558398277597596);
+		api.sendMessage(messengerName + ": " + message, MESSENGER_ID);
 	});
 });
-
