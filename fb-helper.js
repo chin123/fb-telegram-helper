@@ -1,4 +1,3 @@
-#!/bin/node
 const login = require("facebook-chat-api");
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -16,11 +15,11 @@ login({email: process.env.FB_EMAIL, password: process.env.FB_PASSWORD}, (err, ap
 		if (err) return console.error(err);
 
 		console.log(message.threadID + ": " + message.body);
-		if (message.threadID == MESSENGER_ID) {
+		if (message.threadID == messengerID) {
 			api.getUserInfo(message.senderID, (err, ret) => {
 				if(err) return console.error(err);
 				for (var prop in ret) {
-					bot.sendMessage(TELEGRAM_ID, ret[prop].name + ": " + message.body);
+					bot.sendMessage(telegramID, ret[prop].name + ": " + message.body);
 				}
 			});
 		}
@@ -28,6 +27,6 @@ login({email: process.env.FB_EMAIL, password: process.env.FB_PASSWORD}, (err, ap
 	bot.on('message', (msg) => {
 		const chatId = msg.chat.id;
 		var message = msg.text;
-		api.sendMessage(messengerName + ": " + message, MESSENGER_ID);
+		api.sendMessage(messengerName + ": " + message, messengerID);
 	});
 });
