@@ -26,7 +26,9 @@ login({email: process.env.FB_EMAIL, password: process.env.FB_PASSWORD}, (err, ap
 	});
 	bot.on('message', (msg) => {
 		const chatId = msg.chat.id;
-		var message = msg.text;
-		api.sendMessage(messengerName + ": " + message, messengerID);
+		if (chatId == telegramID) {
+			var message = msg.text;
+			api.sendMessage(messengerName + ": " + message, messengerID);
+		}
 	});
 });
