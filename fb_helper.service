@@ -1,0 +1,12 @@
+[Unit]
+Description=FB Telegram Bridge
+After=network.target
+
+[Service]
+Type=simple
+User=chinmaya
+WorkingDirectory=/home/chinmaya
+ExecStart=/home/chinmaya/fb-telegram-helper/fb-telegram-helper.sh
+
+[Install]
+WantedBy=multi-user.target
